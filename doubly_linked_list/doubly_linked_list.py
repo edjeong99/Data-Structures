@@ -48,7 +48,16 @@ class DoublyLinkedList:
         self.tail = node
 
     def add_to_head(self, value):
-        pass
+
+        # if list is empty (head is None ), assign new Node to head and tail
+        if not self.head:
+            self.head = ListNode(value)
+            self.tail = self.head
+
+        # there is node in the list
+        else:
+            self.head.insert_before(value)
+            self.head = self.head.prev
 
     def remove_from_head(self):
         pass
@@ -70,3 +79,36 @@ class DoublyLinkedList:
 
     def get_max(self):
         pass
+
+
+ll = DoublyLinkedList()
+
+ll.add_to_head(3)
+print(ll.head.value)
+print(ll.tail.value)
+
+ll.add_to_head(1)
+print(ll.head.value)
+print(ll.tail.value)
+
+ll.add_to_head(0)
+print(ll.head.value)
+print(ll.tail.value)
+
+'''
+ln = ListNode(1)
+
+ln.insert_after(3)
+
+current = ln
+while current:
+    print(current.value)
+    current = current.next
+
+ln.insert_after(2)
+
+current = ln
+while current:
+    print(current.value)
+    current = current.next
+'''
