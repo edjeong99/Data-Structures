@@ -1,11 +1,20 @@
+
+
 from doubly_linked_list import DoublyLinkedList
 import sys
 sys.path.append('../doubly_linked_list')
 
 
+# LRUCache uses Doubly Linked List
+# new item is stored at Top
+# oldest is stored at Tail
+
+
 class LRUCache:
     def __init__(self, limit=10):
-        pass
+        self.limit = limit
+        self.size = 0
+        self.dll = DoublyLinkedList()
 
     """
   Retrieves the value associated with the given key. Also
@@ -16,7 +25,17 @@ class LRUCache:
   """
 
     def get(self, key):
-        pass
+
+        # find the key
+        # put the key in the Head since it become newest item
+        current = self.dll.head
+
+        while True:
+            if current == key:
+                self.dll.move_to_front(current)
+                break
+
+        return current.value
 
     """
   Adds the given key-value pair to the cache. The newly-
@@ -30,4 +49,10 @@ class LRUCache:
   """
 
     def set(self, key, value):
-        pass
+                # add the new key to Head
+        self.dlk.add_to_head(key)
+        self.size += 1
+
+        # size is more than limit, delete Tail
+        if self.size > self.limit:
+            self.dlk.remove_from_tail()
