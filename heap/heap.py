@@ -8,14 +8,16 @@ class Heap:
 
     def delete(self):
         # remove the first item in array and place the last item in the first place
+        max = self.storage[0]
         self.storage[0] = self.storage[len(self.storage)-1]
         self.storage.pop()
 
         index = 0
         # loop with _sift_down
 
-        while index < len(self.storage) - 1:
+        while index*2+1 <= len(self.storage) - 1:
             index = self._sift_down(index)
+        return max
 
     def get_max(self):
         if self.storage[0]:
@@ -32,18 +34,38 @@ class Heap:
             self.storage[index], self.storage[(
                 index-1)//2] = self.storage[(index-1)//2], self.storage[index]
             index = (index-1)//2
+            if index == 0:
+                break
 
     def _sift_down(self, index):
 
-        if len(self.storage) >= (2*index)+2:
-            if self.storage[(2*index)+1] > self.storage[(2*index)+2]:
-                if self.storage[(2*index)+1] > self.storage[index]:
-                    self.storage[index], self.storage[(2*index) + 1 = self.storage[(2*index)+1], self.storage[index]
-                    return 2*index + 1
-            else:
-                if self.storage[2*index+2] > self.storage[index]:
-                    self.storage[index], self.storage[2*index +
-                                                      2] = self.storage[2*index+2], self.storage[index]
-                    return 2*index + 2
+        # see which children to compare
+        if len(self.storage) < (2*index)+1:  # there is no child
+            return len(self.storage)
+       # both child node exit and right one is bigger
+        elif len(self.storage) > (2*index)+2 and self.storage[(2*index)+2] >= self.storage[(2*index)+1]:
+            child = (2*index)+2
+        else:  # left child is bigger
+            child = (2*index)+1
+
+        # compare with children and swap if needed
+        if self.storage[child] > self.storage[index]:
+            self.storage[index], self.storage[child] = self.storage[child], self.storage[index]
+            return child
 
         return len(self.storage)
+
+
+h = Heap()
+h.insert(5)
+print(h.storage)
+h.insert(1)
+print(h.storage)
+h.insert(10)
+print(h.storage)
+h.insert(7)
+print(h.storage)
+h.delete()
+print(h.storage)
+h.delete()
+print(h.storage)
