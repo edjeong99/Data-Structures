@@ -29,13 +29,15 @@ class LRUCache:
         # find the key
         # put the key in the Head since it become newest item
         current = self.dll.head
-
-        while True:
+        found = False
+        while current:
             if current == key:
                 self.dll.move_to_front(current)
+                found = True
                 break
-
-        return current.value
+            current = current.next
+        if found:
+            return current.value
 
     """
   Adds the given key-value pair to the cache. The newly-
