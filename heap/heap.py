@@ -1,11 +1,19 @@
+'''
+this class implement Heap
+
+'''
+
+
 class Heap:
     def __init__(self):
         self.storage = []
 
+    # add a new Node.  Using bubble_up
     def insert(self, value):
         self.storage.append(value)
         self._bubble_up(len(self.storage)-1)
 
+    # delete the biggest item.  use sift_sown
     def delete(self):
         # remove the first item in array and place the last item in the first place
         max = self.storage[0]
@@ -17,6 +25,7 @@ class Heap:
         self._sift_down(index)
         return max
 
+    # return max value which is in array[0]
     def get_max(self):
         if self.storage[0]:
             return self.storage[0]
@@ -26,6 +35,11 @@ class Heap:
     def get_size(self):
         return len(self.storage)
 
+
+# bubble up compare current value with parent.
+# if current value is bigger, swap with parent.
+# loop this until there is no more parent
+
     def _bubble_up(self, index):
 
         while self.storage[index] > self.storage[(index-1)//2]:
@@ -34,6 +48,11 @@ class Heap:
             index = (index-1)//2
             if index == 0:
                 break
+
+# sift_down, compare two children and pick a larger one.
+# then compare current value with larger child's value
+# if child's value is bigger, swap with current
+# loop this until there is no more child
 
     def _sift_down(self, index):
         # loop until there is no more child Node
