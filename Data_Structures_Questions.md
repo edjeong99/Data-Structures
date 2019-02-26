@@ -20,7 +20,7 @@ Answer the following questions for each of the data structures you implemented a
 
 1. What is the runtime complexity of `_bubble_up`? O(log N)
 
-2. What is the runtime complexity of `_sift_down`?
+2. What is the runtime complexity of `_sift_down`? O(log N)
 
 3. What is the runtime complexity of `insert`? O(log N)
 
