@@ -21,23 +21,20 @@ class LRUCache:
   needs to move the key-value pair to the top of the order
   such that the pair is considered most-recently used.
   Returns the value associated with the key or None if the
-  key-value pair doesn't exist in the cache. 
+  key-value pair doesn't exist in the cache.
   """
 
     def get(self, key):
 
-        # find the key
-        # put the key in the Head since it become newest item
         current = self.dll.head
-        found = False
+
+# loop the link to see if there is a matched key
         while current:
-            if key in current.value:
+            if key in current.value:  # matched key found
                 self.dll.move_to_front(current)
-                found = True
-                break
+                return current.value[key]
+
             current = current.next
-        if found:
-            return current.value[key]
 
     """
   Adds the given key-value pair to the cache. The newly-
@@ -45,32 +42,33 @@ class LRUCache:
   entry in the cache. If the cache is already at max capacity
   before this entry is added, then the oldest entry in the
   cache needs to be removed to make room. Additionally, in the
-  case that the key already exists in the cache, we simply 
+  case that the key already exists in the cache, we simply
   want to overwrite the old value associated with the key with
-  the newly-specified value. 
+  the newly-specified value.
   """
 
     def set(self, key, value):
 
-        # if key exists, replace value and move it to Head
+        # if key exists in list, replace value and move it to Head
         current = self.dll.head
 
         while current:
-            if key in current.value:
+            if key in current.value:  # match found
                 current.value[key] = value
+                self.dll.move_to_front(current)
                 return
             current = current.next
 
-        # if key doesn't exist, add the new key to Head
+        # if key doesn't exist, add the new Node to Head
         # use dictionary format to save input
         input = {key: value}
-
         self.dll.add_to_head(input)
         self.size += 1
 
         # size is more than limit, delete Tail
         if self.size > self.limit:
             self.dll.remove_from_tail()
+            self.size -= 1
 
 
 def print_all(lcache):
