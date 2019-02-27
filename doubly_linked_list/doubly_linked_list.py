@@ -98,17 +98,16 @@ class DoublyLinkedList:
         # if node is tail, assign new tail
         if not node.next:
             self.tail = node.prev
-
-           # assign node's next/prev to right nodes
         else:
-            node.prev.next = node.next
+            node.next.prev = node.prev
+           # assign node's next/prev to right nodes
 
-            if node.prev:
-                node.next.prev = node.prev
+        node.prev.next = node.next
 
         # now take care of head
-            # assign head to node and edit node's next/prev
+        # assign head to node and edit node's next/prev
         self.head.prev = node
+        self.head.prev.next = node.next
         node.next = self.head
         self.head = self.head.prev
         node.prev = None

@@ -31,13 +31,13 @@ class LRUCache:
         current = self.dll.head
         found = False
         while current:
-            if current == key:
+            if key in current.value:
                 self.dll.move_to_front(current)
                 found = True
                 break
             current = current.next
         if found:
-            return current.value
+            return current.value[key]
 
     """
   Adds the given key-value pair to the cache. The newly-
@@ -51,10 +51,50 @@ class LRUCache:
   """
 
     def set(self, key, value):
-                # add the new key to Head
-        self.dlk.add_to_head(key)
+
+        # if key exists, replace value and move it to Head
+        current = self.dll.head
+
+        while current:
+            if key in current.value:
+                current.value[key] = value
+                return
+            current = current.next
+
+        # if key doesn't exist, add the new key to Head
+        # use dictionary format to save input
+        input = {key: value}
+
+        self.dll.add_to_head(input)
         self.size += 1
 
         # size is more than limit, delete Tail
         if self.size > self.limit:
-            self.dlk.remove_from_tail()
+            self.dll.remove_from_tail()
+
+
+def print_all(lcache):
+    current = lcache.dll.head
+    while current:
+        print(f'print all current.value = {current.value}')
+        current = current.next
+    print('end of print all')
+
+
+l = LRUCache(3)
+l.set('item1', 'a')
+l.set('item2', 'b')
+l.set('item3', 'c')
+
+
+l.set('item2', 'z')
+print_all(l)
+print(l.get('item1'))
+'''
+l.get('item1')
+print_all(l)
+l.set('item3', 'c')
+print_all(l)
+l.get('item2')
+print_all(l)
+'''
