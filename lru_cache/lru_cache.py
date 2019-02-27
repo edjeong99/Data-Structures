@@ -55,11 +55,11 @@ class LRUCache:
         while current:
             if key in current.value:  # match found
                 current.value[key] = value
-                self.dll.move_to_front(current)
+                self.dll.move_to_front(current)  # move to head
                 return
             current = current.next
 
-        # if key doesn't exist, add the new Node to Head
+        # if key doesn't exist in list, add the new Node to Head
         # use dictionary format to save input
         input = {key: value}
         self.dll.add_to_head(input)
