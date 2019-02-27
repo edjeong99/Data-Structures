@@ -46,7 +46,7 @@ class Heap:
             self.storage[index], self.storage[(
                 index-1)//2] = self.storage[(index-1)//2], self.storage[index]
             index = (index-1)//2
-            if index == 0:
+            if index == 0:  # if we reached top, stop loop
                 break
 
 # sift_down, compare two children and pick a larger one.
